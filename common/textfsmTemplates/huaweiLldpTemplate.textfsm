@@ -1,0 +1,10 @@
+Value Local_Intf (\S+)
+Value Neighbor_Dev (\S+)
+Value Neighbor_Intf (\S+)
+Value Exptime (\S+)
+
+Start
+  ^Local Intf\s+Neighbor Dev\s+Neighbor Intf\s+Exptime\(s\) -> Start
+  ^${Local_Intf}\s+${Neighbor_Dev}\s+${Neighbor_Intf}\s+${Exptime}\s*$$ -> Record
+
+EOF

@@ -1,0 +1,25 @@
+stp bpdu-protection
+dot1x-access-profile name DEFAULT
+  dot1x reauthenticate 
+  dot1x timer reauthenticate-period 10
+  authentication event client-no-response action authorize ???
+  dot1x timer client-timeout 30
+  dot1x retry max 3
+  dot1x port-control auto
+  quit
+authentication-profile name p1
+  dot1x-access-profile DEFAULT
+  authentication mode multi-authen max-user 100
+interface <interface>
+  port link-type access
+  authentication-profile p1
+
+
+
+"authentication event server dead action reinitialize vlan %s" %vlan,
+"authentication event server dead action authorize voice",
+"authentication event server alive action reinitialize",
+"authentication periodic",
+"authentication timer reauthenticate server",
+"authentication violation restrict",
+"dot1x pae authenticator",

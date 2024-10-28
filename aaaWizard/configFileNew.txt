@@ -1,0 +1,193 @@
+no aaa authorization config-commands
+aaa new-model
+aaa session-id common
+!
+no aaa authentication login default group telnet local
+no aaa authentication dot1x default group radius
+no aaa authorization exec default group radius local
+no aaa authorization network default group radius
+no aaa authorization auth-proxy default group radius
+no aaa accounting auth-proxy default start-stop group radius
+no aaa accounting dot1x default start-stop group radius
+no aaa accounting update newinfo
+no aaa server radius dynamic-author
+no radius-server attribute 6 on-for-login-auth
+no radius-server attribute 6 support-multiple
+no radius-server attribute 8 include-in-access-req
+no radius-server attribute 25 access-request include
+no radius-server dead-criteria time 10 tries 3
+no radius-server deadtime 60
+no radius-server vsa send accounting
+no radius-server vsa send authentication
+no aaa server radius dynamic-author
+no aaa group server radius telnet
+no aaa group server radius ISE
+no aaa group server radius ISE_RADIUS
+no aaa group server tacacs+ ISE_TACACS
+no aaa group server radius ISE_RADIUSALL
+no aaa group server tacacs+ ISE_TACACSALL
+no radius server RADIUS
+no radius server RADIUS1
+no radius server RADIUS2
+no radius server RADIUS3
+no radius server RADIUS4
+no tacacs server ISE_TACACS
+no tacacs server ISE_TACACS1
+no tacacs server ISE_TACACS2
+no tacacs server ISE_TACACS3
+no tacacs server ISE_TACACS4
+!
+no radius-server host 10.134.3.110 auth-port 1812 acct-port 1813 key Arcelik123
+no radius-server host 10.134.3.109 auth-port 1812 acct-port 1813 key Arcelik123
+no radius-server host 10.248.3.110 auth-port 1812 acct-port 1813 key Arcelik123
+no radius-server host 10.248.3.109 auth-port 1812 acct-port 1813 key Arcelik123
+no tacacs-server host 10.134.3.109 key Arcelik123!
+no tacacs-server host 10.134.3.110 key Arcelik123!
+no tacacs-server host 10.248.3.109 key Arcelik123!
+no tacacs-server host 10.248.3.110 key Arcelik123!
+no radius server 10.134.3.109
+no radius server 10.134.3.110
+no radius server 10.248.3.109
+no radius server 10.248.3.110
+no tacacs server 10.134.3.109
+no tacacs server 10.134.3.110
+no tacacs server 10.248.3.109
+no tacacs server 10.248.3.110
+no radius-server host 10.66.0.8 auth-port 1812 acct-port 1813 key Arcelik123
+no tacacs-server host 10.66.0.8 key Arcelik123!
+no radius server 10.66.0.8
+no tacacs server 10.66.0.8
+no radius-server host 10.66.0.7 auth-port 1812 acct-port 1813 key Arcelik123
+no tacacs-server host 10.66.0.7 key Arcelik123!
+no radius server 10.66.0.7
+no tacacs server 10.66.0.7
+!
+aaa new-model
+aaa session-id common
+!
+no ip http server
+no ip http secure-server
+!
+aaa authentication login ISE_TACACS group ISE_TACACS local
+aaa authentication enable default group ISE_TACACS enable
+aaa authentication dot1x default group radius
+aaa authorization exec ISE_TACACS group ISE_TACACS local
+aaa authorization network default group radius
+aaa authorization commands 15 ISE_TACACS group ISE_TACACS local
+aaa authorization auth-proxy default group radius
+aaa accounting auth-proxy default start-stop group radius
+aaa accounting dot1x default start-stop group radius
+aaa accounting update newinfo
+aaa authorization commands 0 ISE_TACACS group ISE_TACACS local
+aaa authorization commands 1 ISE_TACACS group ISE_TACACS local
+aaa authorization commands 15 ISE_TACACS group ISE_TACACS local
+!
+no username arcelik
+
+no username kocsistem
+
+!
+radius-server attribute 6 on-for-login-auth
+radius-server attribute 6 support-multiple
+radius-server attribute 8 include-in-access-req
+radius-server attribute 25 access-request include
+radius-server dead-criteria time 10 tries 3
+radius-server deadtime 10
+radius-server vsa send accounting
+radius-server vsa send authentication
+!
+tacacs server ISE_TACACS1
+ address ipv4 10.66.0.8
+ key Arcelik123!
+tacacs server ISE_TACACS2
+ address ipv4 10.66.0.7
+ key Arcelik123!
+!
+tacacs server ISE_TACACS3
+ address ipv4 10.248.3.110
+ key Arcelik123!
+tacacs server ISE_TACACS4
+ address ipv4 10.134.3.110
+ key Arcelik123!
+!
+aaa group server tacacs+ ISE_TACACS
+ server name ISE_TACACS1
+ server name ISE_TACACS2
+ server name ISE_TACACS3
+ server name ISE_TACACS4
+!
+radius server RADIUS1
+address ipv4 10.66.0.8 auth-port 1812 acct-port 1813
+key 7 106F1B1A001B1B005D5679
+!
+radius server RADIUS2
+address ipv4 10.66.0.7 auth-port 1812 acct-port 1813
+key 7 106F1B1A001B1B005D5679
+!
+radius server RADIUS3
+address ipv4 10.248.3.110 auth-port 1812 acct-port 1813
+key 7 106F1B1A001B1B005D5679
+!
+radius server RADIUS4
+address ipv4 10.134.3.110 auth-port 1812 acct-port 1813
+key 7 106F1B1A001B1B005D5679
+!
+aaa group server radius ISE_RADIUS
+server name RADIUS1
+server name RADIUS2
+server name RADIUS3
+server name RADIUS4
+!
+!
+dot1x system-auth-control
+dot1x critical eapol
+authentication mac-move permit
+authentication critical recovery delay 1000
+!
+aaa server radius dynamic-author
+ client 10.66.0.8 server-key Arcelik123
+ client 10.66.0.7 server-key Arcelik123
+ client 10.248.3.110 server-key Arcelik123
+ client 10.134.3.110 server-key Arcelik123
+!
+line vty 0 4
+ privilege level 15
+ authorization commands 15 ISE_TACACS
+ authorization exec ISE_TACACS
+ login authentication ISE_TACACS
+ transport input all
+line vty 5 15
+ privilege level 15
+ authorization commands 15 ISE_TACACS
+ authorization exec ISE_TACACS
+ login authentication ISE_TACACS
+ transport input all
+!
+aaa authorization config-commands
+!
+ip radius source-interface vlan 10
+ip tacacs source-interface vlan 10
+!
+mac address-table notification change
+mac address-table notification mac-move
+!
+ntp server 10.134.0.1 source Vlan10
+ntp server 10.134.0.2 source Vlan10
+!
+no snmp-server host 10.66.0.8 version 2c arcommban  mac-notification
+no snmp-server host 10.66.0.7 version 2c arcommban  mac-notification
+no snmp-server host 10.66.0.7 version 2c arcommray  mac-notification
+no snmp-server host 10.66.0.8 version 2c arcommray  mac-notification
+snmp-server community arcommray RO
+snmp-server trap-source Vlan10
+snmp-server source-interface informs Vlan10
+snmp-server packetsize 3072
+snmp-server location Hemaraj Fabrika (Rayong, Thailand)
+snmp-server contact SYND_ORG_00101026@arcelik.com
+snmp-server enable traps mac-notification change move threshold
+snmp-server host 10.66.0.8 version 2c arcommray  mac-notification
+!
+lldp run
+ip device tracking
+ip domain-name ar.arcelik
+!

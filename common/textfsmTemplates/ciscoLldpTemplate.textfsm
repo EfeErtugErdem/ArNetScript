@@ -1,0 +1,11 @@
+Value Device_ID (\S+)
+Value Local_Intf (\S+)
+Value Hold_time (\d+)
+Value Capability (\S+)
+Value Port_ID (\S+)
+
+Start
+  ^Device ID\s+Local Intf\s+Hold-time\s+Capability\s+Port ID -> Start
+  ^${Device_ID}\s+${Local_Intf}\s+${Hold_time}\s+${Capability}\s+${Port_ID}\s*$$ -> Record
+
+EOF

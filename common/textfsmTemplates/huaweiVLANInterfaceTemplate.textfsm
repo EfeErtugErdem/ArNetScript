@@ -1,0 +1,10 @@
+Value Port (\S+)
+Value Link_type (\S+)
+Value PVID (\d+)
+Value Trunk_VLAN_List (\S+)
+
+Start
+  ^Port\s+Link Type\s+PVID\s+Trunk VLAN List -> Start
+  ^${Port}\s+${Link_type}\s+${PVID}\s+${Trunk_VLAN_List}\s*$$ -> Record
+
+EOF

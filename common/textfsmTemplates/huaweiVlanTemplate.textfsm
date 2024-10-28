@@ -1,0 +1,15 @@
+Value VID (\d+)
+Value Status (\S+)
+Value Property (\S+)
+Value MAC_LRN (\S+)
+Value Statistics (\S+)
+Value Description (.+)
+
+Start
+  ^VID\s+Status\s+Property\s+MAC-LRN\s+Statistics\s+Description -> RecordTable
+  ^\d+\s+common\s+ -> Start
+  
+RecordTable
+  ^${VID}\s+${Status}\s+${Property}\s+${MAC_LRN}\s+${Statistics}\s+${Description}\s*$$ -> Record
+
+EOF

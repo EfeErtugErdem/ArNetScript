@@ -1,0 +1,10 @@
+Value Slot (\d+)
+Value Sub (\S+)
+Value Serial_number (\S+)
+Value Manu_date (\S+)
+
+Start
+  ^Slot\s+Sub\s+Serial-number\s+Manu-date -> Start
+  ^${Slot}\s+${Sub}\s+${Serial_number}\s+${Manu_date}\s*$$ -> Record
+
+EOF

@@ -1,0 +1,10 @@
+Value Local_Intf (\S+)
+Value Neighbor_Dev (\S+)
+Value Neighbor_Intf (\S+)
+Value Exptime (\S+)
+
+Start
+  ^Local Interface\s+Exptime \(s\)\s+Neighbor Interface\s+Neighbor Device -> Start
+  ^${Local_Intf}\s+${Exptime}\s+${Neighbor_Intf}\s+${Neighbor_Dev}\s*$$ -> Record
+
+EOF
