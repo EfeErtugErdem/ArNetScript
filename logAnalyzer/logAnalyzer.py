@@ -22,11 +22,16 @@ def writeToLogfile(log, pageName=""):
 try:
     # Kullanıcı girdilerini al
     try:
-        parser = argparse.ArgumentParser()
+        parser = argparse.ArgumentParser(description="Firewal log dosyalarini analiz eden ve kurallar cikaran bir script.")
 
-        parser.add_argument("-l", "--log-file", dest="logFile", help="Kuralların çıkarılacağı log dosyası.")
-        parser.add_argument("-p", "--port-threshold", dest="portThreshold", help="Destination port'un kabul edilmesi için alt sınır")
-        parser.add_argument("-i", "--interface-threshold", dest="interfaceThreshold", help="Interface'in kabul edilmesi için alt sınır")
+        parser.add_argument("-l", "--log-file", dest="logFile", required=True,
+                            help="Kurallarin cikarilacagi log dosyasi.")
+        parser.add_argument("-p", "--port-threshold", dest="portThreshold", required=True, type=int,
+                            help="Destination port'un kabul edilmesi icin alt sinir")
+        parser.add_argument("-i", "--interface-threshold", dest="interfaceThreshold", required=True, type=int,
+                            help="Interface'in kabul edilmesi icin alt sinir")
+        parser.add_argument("-h", "--help", action="help",
+                            help="Bu script hakkinda bilgi almak için bu secenegi kullanin.")
         
         userArgs = parser.parse_args()
         writeToLogfile("Kullanici girdileri okundu.")
@@ -35,8 +40,8 @@ try:
         exit(1)
 
     logFilePath = userArgs.logFile
-    portThreshold = int(userArgs.portThreshold)
-    interfaceThreshold = int(userArgs.interfaceThreshold)
+    portThreshold = userArgs.portThreshold
+    interfaceThreshold = userArgs.interfaceThreshold
 
     #Log dosyasını oku
     try:
